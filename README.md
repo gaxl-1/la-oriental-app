@@ -1,62 +1,139 @@
-# 🍔 La Oriental - App de Pedidos para Restaurante
+# La Oriental POS
 
-Sistema automatizado para la gestión de pedidos, control de mesas y facturación, diseñado para optimizar los tiempos de atención y eliminar los errores del proceso manual.
+Sistema POS de escritorio para la Taquería La Oriental, desarrollado en Java Swing con Maven y MySQL. El proyecto permite administrar usuarios, productos, mesas, cuentas/pedidos, comandas de cocina, cierre de ventas y reportes diarios.
 
----
+## Características
 
-## 📝 Escenario y Problemática
-Actualmente, el restaurante toma los pedidos de forma manual, lo que genera:
-* **Confusión en los pedidos** enviados a cocina.
-* **Tiempos de espera lentos** para los comensales.
-* **Errores humanos en las cuentas** finales.
+- Inicio de sesión con control de acceso por rol.
+- CRUD de usuarios, productos y mesas.
+- Productos con stock básico para controlar disponibilidad.
+- Gestión de mesas con estados `DISPONIBLE` y `OCUPADA`.
+- Apertura de cuenta/pedido por mesa.
+- Agregado de productos a la cuenta con cálculo de subtotal y total.
+- Envío de comandas a cocina.
+- Seguimiento de comandas con estados `PENDIENTE`, `EN_COCINA` y `LISTA`.
+- Cierre de cuenta, registro de venta y liberación de mesa.
+- Reporte diario de ventas.
 
-**Objetivo:** Resolver la mala gestión de pedidos y el servicio lento mediante una interfaz rápida, intuitiva y automatizada.
+## Roles del sistema
 
----
+- Administrador: acceso completo a usuarios, productos, mesas, pedidos, cocina, cuenta y reportes.
+- Mesero: gestión de mesas, cuentas/pedidos y envío de comandas.
+- Cocina: consulta y actualización de comandas.
+- Cajero: consulta de cuenta, cierre de venta y reportes.
 
-## 🚀 Solución Propuesta
-Una aplicación multiplataforma que permita:
-1. Registrar pedidos directamente por mesa.
-2. Mostrar un menú digital actualizado.
-3. Calcular el total de la cuenta de forma automática.
-4. Enviar los pedidos a la cocina de manera instantánea.
+## Tecnologías
 
----
+- Java 17
+- Java Swing
+- Maven
+- MySQL
+- MySQL Connector/J 8.4.0
+- NetBeans
 
-## 📦 Módulos del Sistema
-* **Menú:** Visualización y gestión de los productos disponibles.
-* **Pedidos:** Control de comandas desde su creación hasta su envío a cocina.
-* **Mesas:** Monitoreo del estado de las mesas (Libre / Ocupada / Esperando cuenta).
-* **Cuenta:** Liquidación y cálculo automatizado del total del consumo.
+## Estructura principal
 
----
+```text
+src/main/java/com/fortis/laoriental/
+├── conexion      # Conexión a MySQL
+├── controlador   # Controladores de módulos
+├── dao           # Acceso a datos
+├── modelo        # Entidades y DTO
+├── seguridad     # Permisos por rol
+├── servicio      # Reglas de negocio
+├── util          # Utilidades y validaciones
+└── vista         # Interfaces Swing
+```
 
-## ⚙️ Arquitectura y Aplicación Técnica
-El sistema se desarrollará bajo los siguientes pilares técnicos:
+## Base de datos
 
-* **Programación Orientada a Objetos (POO):** Modelado basado en clases principales como `Pedido`, `Producto` y `Mesa`.
-* **Base de Datos (BD):** Persistencia de datos para el control de `Productos` y el histórico de `Ventas`.
-* **Interfaz de Usuario (UI):** Diseño enfocado en una experiencia rápida, visual y de alta usabilidad (simple y ágil para el personal).
+El script oficial se encuentra en:
 
----
+```text
+script_bd_la_oriental.sql
+```
 
-## 📋 Requerimientos
+Este script crea la base de datos `fortis_la_oriental`, sus tablas, relaciones y datos de prueba.
 
-El sistema deberá ser capaz de cumplir con las siguientes funciones core:
-- [ ] Registrar productos en el menú.
-- [ ] Registrar las mesas del restaurante.
-- [ ] Crear nuevos pedidos asociados a una mesa específica.
-- [ ] Agregar productos dinámicamente a un pedido abierto.
-- [ ] Calcular automáticamente el total acumulado del pedido.
-- [ ] Consultar la lista de pedidos activos en tiempo real.
-- [ ] Cerrar pedidos y liberar mesas al procesar el pago.
-- [ ] Generar reportes automatizados de ventas diarias.
+Tablas principales:
 
----
+- `usuario`
+- `producto`
+- `mesa`
+- `pedido`
+- `comanda`
+- `detalle_pedido`
+- `venta`
+- `detalle_venta`
 
-## 👥 Equipo de Desarrollo
-* **Product Owner:** 
-* **Scrum Master:**
-* **Frontend Developer (UX):** Jairo Gael Mota Lopez (`@gaxl-1`)
-* **Backend Developer:**
-* **Database Developer:**
+## Configuración local
+
+Por seguridad, el archivo real `src/main/resources/config.properties` no se sube al repositorio.
+
+Para ejecutar el proyecto:
+
+1. Copia el archivo de ejemplo:
+
+```bash
+cp src/main/resources/config.example.properties src/main/resources/config.properties
+```
+
+2. Edita los datos de conexión:
+
+```properties
+dataBase.host=localhost:3306
+dataBase.usuario=tu_usuario
+dataBase.password=tu_password
+dataBase.nombre=fortis_la_oriental
+```
+
+3. Ejecuta `script_bd_la_oriental.sql` en MySQL.
+
+## Compilación
+
+Desde la raíz del proyecto:
+
+```bash
+mvn clean compile
+```
+
+## Ejecución
+
+Desde Maven:
+
+```bash
+mvn exec:java
+```
+
+O desde NetBeans:
+
+1. Abrir el proyecto Maven.
+2. Verificar que exista `src/main/resources/config.properties`.
+3. Ejecutar la clase principal `com.fortis.laoriental.LaOriental`.
+
+## Flujo principal
+
+1. El usuario inicia sesión.
+2. El mesero selecciona una mesa disponible.
+3. Se abre una cuenta/pedido en estado `ABIERTO`.
+4. Se agregan productos con stock disponible.
+5. Se genera una comanda para cocina.
+6. Cocina actualiza la comanda hasta `LISTA`.
+7. El cajero cierra la cuenta.
+8. Se registra la venta y la mesa vuelve a `DISPONIBLE`.
+
+## Documentación técnica
+
+El archivo `DOCUMENTACION_CODIGO.md` resume la arquitectura interna, paquetes, flujo técnico y reglas principales del sistema.
+
+## Equipo
+
+- Frontend Developer: Jairo Gael Mota Lopez (`@gaxl-1`)
+- Backend Developer: por definir
+- Database Developer: por definir
+- Scrum Master: por definir
+- Product Owner: por definir
+
+## Licencia
+
+Este proyecto está publicado bajo la licencia MIT. Consulta el archivo `LICENSE` para más información.

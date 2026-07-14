@@ -1,0 +1,31 @@
+# Maven / Java
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Local configuration with credentials
+src/main/resources/config.properties
+
+# NetBeans local metadata
+nbproject/private/
+build/
+dist/
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
