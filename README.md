@@ -128,10 +128,11 @@ El archivo `DOCUMENTACION_CODIGO.md` resume la arquitectura interna, paquetes, f
 
 ## Equipo
 
+- Scrum Master: Marco Antonio (`@3525130026-jpg`)
+- Frontend Developer: Eduardo Reyes Daniel (`@EduardoDani01`)
 - Frontend Developer: Jairo Gael Mota Lopez (`@gaxl-1`)
 - Backend Developer: por definir
 - Database Developer: por definir
-- Scrum Master: por definir
 - Product Owner: por definir
 
 ## Licencia
